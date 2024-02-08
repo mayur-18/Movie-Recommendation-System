@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation</title>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Button Example</title>
+        <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #434e52; /* Light grey background */
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #393d42; /* White background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+            text-align: center; /* Center align content */
+        }
+
+        h1 {
+            text-align: center;
+            color: #e3dfdc; /* Dark grey color for headings */
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #e3dfdc; /* Medium grey color for labels */
+        }
+
+        input[type="text"] {
+            width: calc(50% - 80px);
+            padding: 8px;
+            background: #1f2329;
+            border-radius: 15px; /* Curved corners */
+            border: none; /* Remove default border */
+            color: #ffffff; /* Text color */
+            margin-top: 10px; /* Adjust margin */
+        }
+
+        button {
+            padding: 8px 20px;
+            border: none;
+            background-color: #91241f; /* Blue button color */
+            color: #ffffff;
+            border-radius: 15px; /* Curved corners */
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #831d18; /* Darker blue on hover */
+        }
+
+        .recommendations-container {
+            margin-top: 20px;
+        }
+
+        .recommended-movie {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .movie-title {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #bab6b8; /* Dark grey color for movie titles */
+        }
+
+        .movie-poster {
+            width: 100px;
+            height: auto;
+        }
+        </style>
+    </head>
+    <body>
+        <script>
+            function changeColor() {
+                var button = document.getElementById("myButton");
+                button.style.backgroundColor = "#ff4500"; /* Change button color to orange */
+                button.style.margin = "0 auto"; /* Center the button horizontally */
+            }
+        </script>
+    </body>
+    </html>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Movie Recommendation</h1>
+        <div class="input-container">
+            <label for="movieInput">Enter Movie Name:</label>
+            <input type="text" id="movieInput" name="movieInput" placeholder="Type a movie title...">
+        </div>
+        <button id="showRecommendations">Show Recommended Movies</button>
+        <div id="recommendations" class="recommendations-container"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#showRecommendations').click(function() {
+                var movieTitle = $('#movieInput').val();
+                if (movieTitle.trim() !== '') {
+                    // Show loading indicator
+                    $('#recommendations').html('<p>Loading...</p>');
+                    
+                    $.ajax({
+                        url: '/recommendation/',
+                        type: 'GET',
+                        data: {
+                            movie: movieTitle
+                        },
+                        success: function(response) {
+                            // Hide loading indicator and display recommendations
+                            $('#recommendations').html(response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                            // Display error message if something goes wrong
+                            $('#recommendations').html('<p>Error occurred. Please try again later.</p>');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
